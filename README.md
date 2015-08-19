@@ -14,19 +14,25 @@ require('sexylog');
 This makes the `logger` object available (yes, globally) anywhere in your code, like so:
 
 ```
-logger.warn("running logging test");
-logger.info("running logging test");
-logger.debug("running logging test");
-logger.trace("running logging test");
-logger.error("running logging test");
+
+(1) logger.trace("running logging test");
+(2) logger.debug("running logging test");
+(3) logger.info("running logging test");
+(4) logger.warn("running logging test");
+(5) logger.error("running logging test");
+
+
+
+
+
 ```
 
 ## Setting log level
 
 currently sexylog is set via an environment variable named `LEVEL` at the command line.
 
-NOTE: Logging levels are show in order of priority. If you set the variable to TRACE all log levels above will print out.
-If you set the log level to WARN, only warn and nothign below will print out.
+NOTE: Logging levels are show in order of priority. If you set the variable to TRACE all log levels above this level will print out.
+If you set the log level to WARN, only WARN and ERROR message will be printed, but nothing below these levels will print out.
 
 Exmaple:
 
