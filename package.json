@@ -2,7 +2,7 @@
   "name": "sexylog",
   "description": "node.js logging implementation",
   "version": "0.0.1",
-  "author": "Gawain Hammond",
+  "author": "Simplicity Itself",
   "keywords": [
     "logging",
     "colour",
