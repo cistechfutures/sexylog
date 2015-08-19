@@ -1,11 +1,7 @@
 # sexylog
   node js colourful logging framework
 
-## tests
 
-```
-mocha test/logging-test.js
-```
 
 ## getting started
 
@@ -43,4 +39,11 @@ or
 
 ```
 LEVEL=trace node app.js
+```
+
+
+## running tests
+
+```
+mocha test/logging-test.js
 ```
