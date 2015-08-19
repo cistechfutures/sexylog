@@ -1,0 +1,43 @@
+{
+  "name": "sexylog",
+  "description": "node.js logging implementation",
+  "version": "0.0.1",
+  "author": "Gawain Hammond",
+  "keywords": [
+    "logging",
+    "colour",
+    "color"
+  ],
+  "private": false,
+  "repository": {
+    "url": "https://github.com/fuzzy-logic/sexylog"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive -R xunit-file test/"
+  },
+  "main": "./logging/logger",
+  "dependencies": {
+    "console.table" : "*",
+    "split": "*",
+    "underscore": "*",
+    "url": "*",
+    "node-uuid": "*",
+    "body-parser": "*",
+    "expect.js": "*",
+    "winston": "*",
+    "colors": "*",
+    "callsite": "*",
+    "stack-trace": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "assert": "*",
+    "validator": "*",
+    "should": "*",
+    "mocha-sinon":"*"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "preferGlobal": "false"
+}
