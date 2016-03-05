@@ -1,14 +1,7 @@
-var winston = require('winston');
+
 require('./date.js');
-var consoleplus = require('./console-plus.js');
-var fs = require("fs");
-var util = require("util");
-var stackTrace = require('stack-trace');
-var colors = require('colors');
+
 require("callsite");
-
-
-
 
 
 //var levels = winston.config.cli.levels;
@@ -28,7 +21,75 @@ require("callsite");
     };
 
 var Logger = function(newName, maxLevel, outputFile, stdout) {
-    var loggerTransports = new Array();
+
+    var logger = this;
+
+    logger.name = newName;
+
+    logger.log = function(level, msg, anything) {
+        logger.logPlus(level, msg, anything);
+    }
+
+    logger.info = function(msg, anything) {
+        logger.logPlus('info', msg, anything);
+    }
+
+    logger.warn = function(msg, anything) {
+        logger.logPlus('warn', msg, anything);
+    }
+
+    logger.debug = function(msg, anything) {
+        logger.logPlus('debug', msg, anything);
+    }
+
+    logger.trace = function(msg, anything) {
+        logger.logPlus('trace', msg, anything);
+    }
+
+    logger.error = function(msg, anything) {
+        logger.logPlus('error', msg, anything);
+    }
+
+    logger.rainbow = function(msg, anything) {
+        logger.logPlus('rainbow', msg, anything);
+    }
+
+    if (typeof GLOBAL !== 'undefined') {
+        setupForNode(logger, newName, maxLevel, outputFile, stdout)
+        logger.debug("Configured logging for Node.js runtime");
+    } else {
+        setupForBrowser(logger, newName, maxLevel, outputFile, stdout);
+        logger.debug("Configured logging for Browser runtime");
+    }
+
+    return this;
+};
+
+function setupForBrowser(logger, newName, maxLevel, outputFile, stdout) {
+    logger.logPlus = function(level, msg, anything) {
+        if(levels[level.toLowerCase()] >=
+            levels[maxLevel.toLowerCase()]) {
+            if(anything == undefined || anything == null) {
+                console.log("[" + level.toUpperCase() + "] " + msg);
+            } else {
+                console.log("[" + level.toUpperCase() + "] " + msg + "|" + anything);
+            }
+        }
+    }
+    window.logger = logger;
+}
+
+function setupForNode(logger, newName, maxLevel, outputFile, stdout) {
+    GLOBAL.logger = logger;
+
+    var winston = require('winston');
+    var consoleplus = require('./console-plus.js');
+    var fs = require("fs");
+    var util = require("util");
+    var stackTrace = require('stack-trace');
+    var colors = require('colors');
+
+    var loggerTransports = [];
     var bConsolePlus = (stdout == "consoleplus");
 
     if(stdout == "winston") {
@@ -56,65 +117,30 @@ var Logger = function(newName, maxLevel, outputFile, stdout) {
             handleExceptions: false
         }))
     }
-    this._logger = new winston.Logger({
+    logger._logger = new winston.Logger({
         transports: loggerTransports
     });
-    this.name = newName;
 
-    this.log = function(level, msg, anything) {
-        this.logPlus(level, msg, anything);
-    }
-
-    this.info = function(msg, anything) {
-        this.logPlus('info', msg, anything);
-    }
-
-    this.warn = function(msg, anything) {
-        this.logPlus('warn', msg, anything);
-    }
-
-    this.debug = function(msg, anything) {
-        this.logPlus('debug', msg, anything);
-    }
-
-    this.trace = function(msg, anything) {
-        this.logPlus('trace', msg, anything);
-    }
-
-    this.error = function(msg, anything) {
-        this.logPlus('error', msg, anything);
-    }
-
-    this.rainbow = function(msg, anything) {
-        this.logPlus('rainbow', msg, anything);
-    }
-
-    this.logPlus = function(level, msg, anything) {
+    logger.logPlus = function(level, msg, anything) {
         if(levels[level.toLowerCase()] >=
-           levels[maxLevel.toLowerCase()]) {
+            levels[maxLevel.toLowerCase()]) {
             if(anything == undefined || anything == null) {
                 if(consoleplus) {
                     consoleplus[level](msg);
                 }
-                this._logger.log(level, msg);
+                logger._logger.log(level, msg);
             } else {
                 if(consoleplus) {
                     consoleplus[level](msg, anything);
                 }
-                this._logger.log(level, msg, anything);
+                logger._logger.log(level, msg, anything);
             }
         }
     }
 
-
-
-
-
-    this._logger.setLevels(levels);
-
-    return this;
+    logger._logger.setLevels(levels);
 }
 
 var level = process.env.LEVEL ? process.env.LEVEL : 'info';
-GLOBAL.logger = Logger('muon', level, '/tmp/muon.log', true,
-    "console-plus");
+
+module.exports = Logger('muon', level, '/tmp/muon.log', true, "console-plus");
