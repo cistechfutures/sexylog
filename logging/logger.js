@@ -14,7 +14,7 @@ require("callsite");
 //var levels = winston.config.cli.levels;
 
    var levels = {
-     silly: 0,
+     rainbow: 11,
      input: 1,
      verbose: 2,
      prompt: 3,
@@ -62,30 +62,51 @@ var Logger = function(newName, maxLevel, outputFile, stdout) {
     this.name = newName;
 
     this.log = function(level, msg, anything) {
+            if (typeof anything == Object) {
+               anything = JSON.stringify(anything);
+            }
         this.logPlus(level, msg, anything);
     }
 
     this.info = function(msg, anything) {
+            if (typeof anything == Object) {
+               anything = JSON.stringify(anything);
+            }
         this.logPlus('info', msg, anything);
     }
 
     this.warn = function(msg, anything) {
+            if (typeof anything == Object) {
+               anything = JSON.stringify(anything);
+            }
         this.logPlus('warn', msg, anything);
     }
 
     this.debug = function(msg, anything) {
+            if (typeof anything == Object) {
+                JSON.stringify(anything);
+            }
         this.logPlus('debug', msg, anything);
     }
 
     this.trace = function(msg, anything) {
+            if (typeof anything == Object) {
+                anything = JSON.stringify(anything);
+            }
         this.logPlus('trace', msg, anything);
     }
 
     this.error = function(msg, anything) {
+            if (typeof anything == Object) {
+                anything = JSON.stringify(anything);
+            }
         this.logPlus('error', msg, anything);
     }
 
     this.rainbow = function(msg, anything) {
+        if (typeof anything == Object) {
+           anything = JSON.stringify(anything);
+        }
         this.logPlus('rainbow', msg, anything);
     }
 
@@ -106,15 +127,10 @@ var Logger = function(newName, maxLevel, outputFile, stdout) {
         }
     }
 
-
-
-
-
     this._logger.setLevels(levels);
 
     return this;
 }
 
 var level = process.env.LEVEL ? process.env.LEVEL : 'info';
-GLOBAL.logger = Logger('muon', level, '/tmp/muon.log', true,
-    "console-plus");
+GLOBAL.logger = Logger('muon', level, '/tmp/muon.log', true, "console-plus");
