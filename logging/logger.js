@@ -132,5 +132,5 @@ var Logger = function(newName, maxLevel, outputFile, stdout) {
     return this;
 }
 
-var level = process.env.LEVEL ? process.env.LEVEL : 'info';
+var level = process.env.LEVEL ? process.env.LEVEL : 'warn';
 GLOBAL.logger = Logger('muon', level, '/tmp/muon.log', true, "console-plus");
