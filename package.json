@@ -17,24 +17,24 @@
   },
   "main": "./logging/logger",
   "dependencies": {
-    "console.table" : "*",
+    "body-parser": "*",
+    "callsite": "*",
+    "colors": "*",
+    "console.table": "*",
+    "expect.js": "*",
     "split": "*",
+    "stack-trace": "*",
     "underscore": "*",
     "url": "*",
-    "node-uuid": "*",
-    "body-parser": "*",
-    "expect.js": "*",
-    "winston": "*",
-    "colors": "*",
-    "callsite": "*",
-    "stack-trace": "*"
+    "uuid": "^3.0.0",
+    "winston": "*"
   },
   "devDependencies": {
     "mocha": "*",
     "assert": "*",
     "validator": "*",
     "should": "*",
-    "mocha-sinon":"*"
+    "mocha-sinon": "*"
   },
   "engines": {
     "node": "*"
