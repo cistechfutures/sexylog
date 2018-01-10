@@ -35,13 +35,13 @@ Example:
 
 
 ```
-export LEVEL=info
+export LOG_LEVEL=info
 ```
 
 or
 
 ```
-LEVEL=trace node app.js
+LOG_LEVEL=trace node app.js
 ```
 
 
