@@ -66,8 +66,8 @@ var Logger = function(maxLevel) {
 
 
     _this.logPlus = function(level, msg, anything) {
-        console.log('sexlog.' + level + '() msg="' + msg + '", other="' + anything + '"');
-        console.log('level=' + level + ', maxLevel=' + maxLevel);
+        //console.log('sexlog.' + level + '() msg="' + msg + '", other="' + anything + '"');
+        //console.log('level=' + level + ', maxLevel=' + maxLevel);
         if(levels[level.toLowerCase()] >=  levels[maxLevel.toLowerCase()]) {
 
             if(anything == undefined || anything == null) {
@@ -80,8 +80,8 @@ var Logger = function(maxLevel) {
                 }
             }
         } else {
-
-            console.log('SKIP LOGGING! sexlog.' + level + '() level=' + levels[level.toLowerCase()] + '  < maxLevel ' + maxLevel + '=' + levels[maxLevel.toLowerCase()] );
+            // Do nothing, don't log
+            //console.log('SKIP LOGGING! sexlog.' + level + '() level=' + levels[level.toLowerCase()] + '  < maxLevel ' + maxLevel + '=' + levels[maxLevel.toLowerCase()] );
         }
     }
     return this;

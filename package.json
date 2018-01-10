@@ -1,7 +1,7 @@
 {
   "name": "sexylog",
   "description": "node.js very simple logging implementation",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Gawain Hammond",
   "keywords": [
     "logging",
