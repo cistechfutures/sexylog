@@ -2,7 +2,7 @@
 .PHONY: test
 
 build:
-	npm start
+	tsc
 
 test:
 	npm test
@@ -10,6 +10,9 @@ test:
 install:
 	npm install
 
-publish: install
+publish: build install
 	npm publish
 
+
+bib: build
+	echo "DONE"

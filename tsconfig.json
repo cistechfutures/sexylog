@@ -12,11 +12,15 @@
     "emitDecoratorMetadata": true,
     "declarationDir": "logging",
     "outDir": "logging",
+    "allowJs": true,
     "typeRoots": [
       "node_modules/@types"
     ]
   },
   "include": [
     "src"
+  ],
+  "files": [
+    "src/global.ts"
   ]
 }
