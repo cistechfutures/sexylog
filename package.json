@@ -12,11 +12,11 @@
   "repository": {
     "url": "https://github.com/fuzzy-logic/sexylog"
   },
-  "main": "dist/sexylog.umd.js",
-  "module": "dist/sexylog.es5.js",
-  "typings": "dist/types/sexylog.d.ts",
+  "main": "logging/sexylog.umd.js",
+  "module": "logging/sexylog.es5.js",
+  "typings": "logging/sexylog.d.ts",
   "files": [
-    "dist"
+    "logging"
   ],
   "license": "MIT",
   "engines": {
@@ -24,8 +24,8 @@
   },
   "scripts": {
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs --outDir dist/lib && rollup -c rollup.config.ts && typedoc --out dist/docs --target es6 --theme minimal --mode file src",
+    "prebuild": "rimraf logging",
+    "build": "tsc --module commonjs --outDir logging/lib && rollup -c rollup.config.ts && typedoc --out logging/docs --target es6 --theme minimal --mode file src",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
     "test:watch": "jest --watch",

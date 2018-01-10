@@ -1,9 +1,9 @@
-const consoleplus = require('../logging/console-plus.js')
-const consoleio = require('../logging/consoleio.js')
+const consoleplus = require('../src/console-plus')
+const consoleio = require('../src/consoleio')
 const expect = require('expect.js')
 var sinon = require('sinon')
 const assert = require('assert')
-const Logger = require('../logging/sexylog.js')
+const Logger = require('../src/sexylog')
 
 var logStub
 var logType
@@ -14,12 +14,13 @@ process.env['LOG_LEVEL'] = 'trace'
 describe('test sexylog', function() {
   var expectation = function() {}
 
-  before(function() {
+  beforeAll(function() {
     logStub = sinon.stub(consoleio, 'log').callsFake(function(string, object) {
       console.log('sinon stub consoleio.log() called=true ')
       process.stdout.write(string + '\n')
-      var expectedString = '[' + logType + '] in logging-test.js'
+      var expectedString = '[' + logType + '] in sexylog.test.ts'
       console.log('expectedString=' + expectedString)
+      console.log('actualString=' + string)
       var expectedOutput = string.indexOf(expectedString) > -1
       assert(
         expectedOutput,
@@ -32,7 +33,7 @@ describe('test sexylog', function() {
     if (logStub) logStub.reset()
   })
 
-  after(function() {
+  afterAll(function() {
     if (logStub) logStub.restore()
   })
 

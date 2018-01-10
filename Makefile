@@ -1,6 +1,9 @@
 
 .PHONY: test
 
+build:
+	npm start
+
 test:
 	npm test
 

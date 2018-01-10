@@ -1,4 +1,4 @@
-require('./date.js');
+require('./date');
 var consoleplus = require('./console-plus.js');
 var stackTrace = require('stack-trace');
 var colors = require('colors');
