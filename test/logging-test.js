@@ -1,27 +1,32 @@
-consoleplus = require('../logging/console-plus.js');
-var consoleio = require('../logging/consoleio.js');
-var expect = require('expect.js');
+const consoleplus = require('../logging/console-plus.js');
+const consoleio = require('../logging/consoleio.js');
+const expect = require('expect.js');
 var sinon = require('sinon');
-var assert = require('assert');
-var Logger = require('../logging/logger.js');
+const assert = require('assert');
+const Logger = require('../logging/sexylog.js');
+
+
 
 var logStub;
 var logType;
 
-process.env['LEVEL'] = 'trace';
+process.env['LOG_LEVEL'] = 'trace';
+//console.log('logging-test.js process.env["LOG_LEVEL"]=' + process.env['LOG_LEVEL']);
 
-describe('test tradingplaces authentication', function() {
+describe('test sexylog', function() {
 
+    var expectation = function() {
 
+    }
 
     before(function(){
-        logStub = sinon.stub(consoleio, "log", function(string) {
-            //console.log('sinon stub consoleio.log() called=true ');
+        logStub = sinon.stub(consoleio, "log").callsFake( function(string, object) {
+            console.log('sinon stub consoleio.log() called=true ');
             process.stdout.write(string + "\n");
             var expectedString = '[' + logType + '] in logging-test.js';
-            //console.log('expectedString=' + expectedString);
+            console.log('expectedString=' + expectedString);
             var expectedOutput = string.indexOf(expectedString) > -1;
-            if (logType != 'rainbow') assert(expectedOutput);
+            assert(expectedOutput,  'expected logger output to contain "' + expectedString + '"');
         });
     })
 
@@ -42,22 +47,54 @@ describe('test tradingplaces authentication', function() {
 
 
     it('console plus prints using override path filter', function(done) {
-        process.env['TP_LOG_PATH'] = '/test';
+        process.env['LOG_PATH'] = '/test';
         doLogging();
         expect(logStub.called).to.be(true);
         done();
     });
 
     it('console plus does not print using override path filter', function(done) {
-        process.env['TP_LOG_PATH'] = '/nopath';
+        process.env['LOG_PATH'] = '/nopath';
         doLogging();
         expect(logStub.called).to.be(false);
         done();
     });
 
     it('legacy log level as args method works too', function(done) {
-        process.env['TP_LOG_PATH'] = '/test';
+        process.env['LOG_PATH'] = '/test';
         doLogging();
+        expect(logStub.called).to.be(true);
+        done();
+    });
+
+    it('prints string arumgents correctly', function(done) {
+        process.env['LOG_PATH'] = '/test';
+        if (logStub) logStub.restore();
+        logStub = sinon.stub(consoleio, "log").callsFake( function(string) {
+            console.log('sinon stub consoleio.log() called=true ');
+            process.stdout.write(string + "\n");
+            var expectedString = 'goodbye, cruel world!';
+            console.log('expectedString=' + expectedString);
+            var expectedOutput = string.indexOf(expectedString) > -1;
+            assert(expectedOutput, 'expected logger output to contain "' + expectedString + '"');
+        });
+
+        logger.info('info level string argument: ', "goodbye, cruel world!");
+        expect(logStub.called).to.be(true);
+        done();
+    });
+
+    it('prints number arumgents correctly', function(done) {
+        process.env['LOG_PATH   '] = '/test';
+        if (logStub) logStub.restore();
+        logStub = sinon.stub(consoleio, "log").callsFake( function(string, object) {
+            process.stdout.write(string + "\n");
+            var expectedString = '999';
+            var expectedOutput = string.indexOf(expectedString) > -1;
+            assert(expectedOutput, 'expected logger output to contain "' + expectedString + '"');
+        });
+
+        logger.info('info level number argument: ', 999);
         expect(logStub.called).to.be(true);
         done();
     });
@@ -68,21 +105,21 @@ describe('test tradingplaces authentication', function() {
 function doLogging() {
 
     logType = 'rainbow';
-    logger.rainbow('rainbow text');
+    logger.silly('rainbow level text object: ', {id: 1, message: "hello, world"});
 
     logType = 'error';
-    logger.error('error text');
+    logger.error('error level text object:', {id: 2, message: "hello, world"});
 
     logType = 'warn';
-    logger.warn('warn text');
+    logger.warn('warn level text object: ', {id: 3, message: "hello, world"});
 
     logType = 'info';
-    logger.info('info text');
+    logger.info('info level text object: ', {id: 4, message: "hello, world"});
 
     logType = 'debug';
-    logger.debug('debug text');
+    logger.debug('debug level text object: ', {id: 5, message: "hello, world"});
 
     logType = 'trace';
-    logger.trace('trace text');
+    logger.trace('trace level text object: ', {id: 6, message: "hello, world"});
 
 }
