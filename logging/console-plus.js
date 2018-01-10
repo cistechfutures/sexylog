@@ -7,24 +7,20 @@
  * Example output:
  * 2010-01-17 11:43:37.987 [info] Message in models/User.js:120
  */
-var fs = require("fs"),
-	util = require("util");
-var stackTrace = require('stack-trace');
-var colors = require('colors');
-var consoleio = require('./consoleio.js');
+const fs = require("fs");
+const util = require("util");
+const stackTrace = require('stack-trace');
+const colors = require('colors');
+const consoleio = require('./consoleio.js');
 require("callsite");
 
+const LOG_PATH_ENV = 'LOG_PATH';
 
-
-
-  
 module.exports = {
 	info: function() {	
-        
         var trace = getTrace();
         if (! logPath(trace)) return;
 		var string = util.format("%s [info] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
-		
 		consoleio.log(colors.cyan(string));
 	},
 	
@@ -32,15 +28,13 @@ module.exports = {
          var trace = getTrace();
         if (! logPath(trace)) return;
 		var string = util.format("%s [warn] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
-		
-		consoleio.log(colors.black(string));
+		consoleio.log(colors.blue(string));
 	},
     
     debug: function() {
          var trace = getTrace();
         if (! logPath(trace)) return;
 		var string = util.format("%s [debug] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
-		
 		consoleio.log(colors.yellow(string));
 	},
     
@@ -48,15 +42,13 @@ module.exports = {
          var trace = getTrace();
         if (! logPath(trace)) return;
 		var string = util.format("%s [trace] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
-		
 		consoleio.log(colors.grey(string));
 	},  
     
-    rainbow: function() {
+    silly: function() {
          var trace = getTrace();
         if (! logPath(trace)) return;
-		var string = util.format("%s in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
-		
+		var string = util.format("%s [silly] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
 		consoleio.log(colors.rainbow(string));
 	}, 
 	
@@ -64,7 +56,6 @@ module.exports = {
          var trace = getTrace();
         if (! logPath(trace)) return;
 		var string = util.format("%s [error] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
-		
 		consoleio.log(colors.red.bold(string));
 	}
 }
@@ -92,7 +83,7 @@ function file(trace) {
 }
 
 function logPath(trace) {
-    var logpathFilter = process.env.TP_LOG_PATH || '/';
+    var logpathFilter = process.env[LOG_PATH_ENV] || '/';
     var logPath = false;
     var file = trace.file;
     var startsWith = file.indexOf(logpathFilter) > -1;
