@@ -3,7 +3,7 @@ const consoleio = require('../logging/consoleio.js');
 const expect = require('expect.js');
 var sinon = require('sinon');
 const assert = require('assert');
-const Logger = require('../logging/sexylog.js');
+const logger = require('../logging/sexylog.js');
 
 
 
@@ -11,7 +11,7 @@ var logStub;
 var logType;
 
 process.env['LOG_LEVEL'] = 'trace';
-//console.log('logging-test.js process.env["LOG_LEVEL"]=' + process.env['LOG_LEVEL']);
+console.log('logging-test.js process.env["LOG_LEVEL"]=' + process.env['LOG_LEVEL']);
 
 describe('test sexylog', function() {
 
@@ -79,7 +79,7 @@ describe('test sexylog', function() {
             assert(expectedOutput, 'expected logger output to contain "' + expectedString + '"');
         });
 
-        logger.info('info level string argument: ', "goodbye, cruel world!");
+        logger.warn('info level string argument: ', "goodbye, cruel world!");
         expect(logStub.called).to.be(true);
         done();
     });
@@ -94,7 +94,7 @@ describe('test sexylog', function() {
             assert(expectedOutput, 'expected logger output to contain "' + expectedString + '"');
         });
 
-        logger.info('info level number argument: ', 999);
+        logger.warn('info level number argument: ', 999);
         expect(logStub.called).to.be(true);
         done();
     });

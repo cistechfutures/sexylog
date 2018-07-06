@@ -16,6 +16,7 @@ var levels = {
     silly: 5
 };
 
+var maxLogLevel = process.env['LOG_LEVEL'] ? process.env['LOG_LEVEL'] : 'warn';
 
 
 
@@ -88,6 +89,5 @@ var Logger = function(maxLevel) {
 }
 
 
-var maxLogLevel = process.env['LOG_LEVEL'] ? process.env['LOG_LEVEL'] : 'warn';
-global.logger = Logger(maxLogLevel);
-
+module.exports =  Logger(maxLogLevel);
+//global.logger = Logger(maxLogLevel);
