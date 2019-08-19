@@ -14,9 +14,14 @@ const colors = require('colors');
 const consoleio = require('./consoleio.js');
 require("callsite");
 
+var stackDepth = 4;
+
 const LOG_PATH_ENV = 'LOG_PATH';
 
 module.exports = {
+    setStackDepth: function(int) {
+        stackDepth = int;
+    },
 	info: function() {	
         var trace = getTrace();
         if (! logPath(trace)) return;
@@ -64,7 +69,7 @@ function getTrace() {
 
     var err = new Error('something went wrong');
     var trace = stackTrace.parse(err);
-    var call = trace[4];  // <-- TODO to get correct file name you may need to tweak the call stack index
+    var call = trace[stackDepth];
     
     // console.log('console-plus call=');
     // console.dir(call);

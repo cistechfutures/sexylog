@@ -5,7 +5,7 @@ var colors = require('colors');
 require("callsite");
 
 
-
+var stackDepth = 4;
 
 var levels = {
     trace: 0,
@@ -22,6 +22,10 @@ var maxLogLevel = process.env['LOG_LEVEL'] ? process.env['LOG_LEVEL'] : 'warn';
 
 var Logger = function(maxLevel) {
     const _this = this;
+
+    _this.setStackDepth = function(depthX) {
+
+    }
 
     _this.info = function(msg, anything) {
         if (typeof anything == Object) {
@@ -82,12 +86,10 @@ var Logger = function(maxLevel) {
             }
         } else {
             // Do nothing, don't log
-            //console.log('SKIP LOGGING! sexlog.' + level + '() level=' + levels[level.toLowerCase()] + '  < maxLevel ' + maxLevel + '=' + levels[maxLevel.toLowerCase()] );
+            //console.log('SKIP LOGGING! sexylog.' + level + '() level=' + levels[level.toLowerCase()] + '  < maxLevel ' + maxLevel + '=' + levels[maxLevel.toLowerCase()] );
         }
     }
     return this;
 }
 
-
 module.exports =  Logger(maxLogLevel);
-//global.logger = Logger(maxLogLevel);
