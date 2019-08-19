@@ -19,8 +19,8 @@ var stackDepth = 4;
 const LOG_PATH_ENV = 'LOG_PATH';
 
 module.exports = {
-    setStackDepth: function(int) {
-        stackDepth = int;
+    incrementStackDepth: function(int) {
+        stackDepth += int;
     },
 	info: function() {	
         var trace = getTrace();
@@ -50,10 +50,10 @@ module.exports = {
 		consoleio.log(colors.grey(string));
 	},  
     
-    silly: function() {
+    rainbow: function() {
          var trace = getTrace();
         if (! logPath(trace)) return;
-		var string = util.format("%s [silly] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
+		var string = util.format("%s [rainbow] in %s:%d %s", trace.timestamp, file(trace), trace.lineno, util.format.apply(this, arguments));
 		consoleio.log(colors.rainbow(string));
 	}, 
 	

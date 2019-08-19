@@ -5,7 +5,6 @@ var colors = require('colors');
 require("callsite");
 
 
-var stackDepth = 4;
 
 var levels = {
     trace: 0,
@@ -13,7 +12,7 @@ var levels = {
     info: 2,
     warn: 3,
     error: 4,
-    silly: 5
+    rainbow: 5
 };
 
 var maxLogLevel = process.env['LOG_LEVEL'] ? process.env['LOG_LEVEL'] : 'warn';
@@ -23,8 +22,8 @@ var maxLogLevel = process.env['LOG_LEVEL'] ? process.env['LOG_LEVEL'] : 'warn';
 var Logger = function(maxLevel) {
     const _this = this;
 
-    _this.setStackDepth = function(depthX) {
-
+    _this.incrementStackDepth = function(int) {
+        consoleplus.incrementStackDepth(int);
     }
 
     _this.info = function(msg, anything) {
@@ -62,7 +61,7 @@ var Logger = function(maxLevel) {
             _this.logPlus('error', msg, anything);
     }
 
-    _this.silly = function(msg, anything) {
+    _this.rainbow = function(msg, anything) {
         if (typeof anything == Object) {
         anything = JSON.stringify(anything);
         }
